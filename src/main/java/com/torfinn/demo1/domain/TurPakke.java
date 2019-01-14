@@ -13,8 +13,20 @@ public class TurPakke {
     @Column
     private String navn;
 
+    private TurPakke() {
+        // used by Hibernate
+    }
+
     public TurPakke(String kode, String navn) {
         this.kode = kode;
         this.navn = navn;
+    }
+
+    @Override
+    public String toString() {
+        return "TurPakke{" +
+                "kode='" + kode + '\'' +
+                ", navn='" + navn + '\'' +
+                '}';
     }
 }

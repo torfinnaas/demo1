@@ -20,7 +20,7 @@ public class TurSrv {
         this.turRepo = turRepo;
     }
 
-    public Tur createTur(String id, String tittel, String beskrivelse, Integer pris, String turPakkeKode) {
+    public Tur createTur(String tittel, String beskrivelse, Integer pris, String turPakkeKode) {
         Optional<TurPakke> turPakke = turPakkeRepo.findById(turPakkeKode);
         if (turPakke == null)
             throw new RuntimeException("Tur-pakke eksisterer ikke: " + turPakkeKode);
@@ -35,4 +35,10 @@ public class TurSrv {
     public long total() {
         return turRepo.count();
     }
+
+    public Iterable<Tur> listBillige() {
+        Optional<TurPakke> turPakke = turPakkeRepo.findById("BC");
+        return turRepo.findByPrisLessThanAndTurPakke(120, turPakke.get());
+    }
+
 }

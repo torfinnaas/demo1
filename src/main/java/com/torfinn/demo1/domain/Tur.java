@@ -20,10 +20,27 @@ public class Tur {
     @ManyToOne
     private TurPakke turPakke;
 
+    private Tur() {
+        // used by Hibernate
+    }
+
+
     public Tur(String tittel, String beskrivelse, Integer pris, TurPakke turPakke) {
         this.tittel = tittel;
         this.beskrivelse = beskrivelse;
         this.pris = pris;
         this.turPakke = turPakke;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Tur{" +
+                "id=" + id +
+                ", tittel='" + tittel + '\'' +
+                ", beskrivelse='" + beskrivelse + '\'' +
+                ", pris=" + pris +
+                ", turPakke=" + turPakke +
+                '}';
     }
 }
