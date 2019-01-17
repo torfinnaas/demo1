@@ -8,6 +8,7 @@ import com.torfinn.demo1.repo.TurRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,7 @@ public class TurSrv {
 
     public Tur createTur(String tittel, String beskrivelse, Integer pris, String turPakkeKode, Grad grad) {
         Optional<TurPakke> turPakke = turPakkeRepo.findById(turPakkeKode);
-        if (turPakke == null)
+        if (!turPakke.isPresent())
             throw new RuntimeException("Tur-pakke eksisterer ikke: " + turPakkeKode);
 
         return turRepo.save(new Tur(tittel, beskrivelse, pris, turPakke.get(), grad));
