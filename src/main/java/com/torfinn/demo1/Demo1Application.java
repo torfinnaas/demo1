@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
 
+import static com.torfinn.demo1.domain.Grad.Medium;
+
 @SpringBootApplication
 public class Demo1Application {
 
@@ -32,10 +34,10 @@ public class Demo1Application {
 
 		turPakkeSrv.lookup().forEach(turPakke -> System.out.println(turPakke));
 
-		turSrv.createTur("Gåtur over Golden Gate", "Rusletur over den berømte broen", 100, "CC");
-		turSrv.createTur("Vinsmaking i Napa Wally", "Californias berømte vin distrikt", 110, "BC");
-		turSrv.createTur("Fishermens Warft", "Omvisning på denne turistfellen", 120, "BC");
-		turSrv.createTur("Pasific Hills", "Gåtur rundt i dette upper-class området", 130, "BC");
+		turSrv.createTur("Gåtur over Golden Gate", "Rusletur over den berømte broen", 100, "CC", Medium);
+		turSrv.createTur("Vinsmaking i Napa Wally", "Californias berømte vin distrikt", 110, "BC", Medium);
+		turSrv.createTur("Fishermens Warft", "Omvisning på denne turistfellen", 120, "BC", Medium);
+		turSrv.createTur("Pasific Hills", "Gåtur rundt i dette upper-class området", 130, "BC", Medium);
 
 		turSrv.lookup().forEach(tur -> System.out.println(tur));
 		System.out.println("\n\nBilligturer\n");

@@ -1,5 +1,6 @@
 package com.torfinn.demo1.services;
 
+import com.torfinn.demo1.domain.Grad;
 import com.torfinn.demo1.domain.Tur;
 import com.torfinn.demo1.domain.TurPakke;
 import com.torfinn.demo1.repo.TurPakkeRepo;
@@ -20,16 +21,17 @@ public class TurSrv {
         this.turRepo = turRepo;
     }
 
-    public Tur createTur(String tittel, String beskrivelse, Integer pris, String turPakkeKode) {
+    public Tur createTur(String tittel, String beskrivelse, Integer pris, String turPakkeKode, Grad grad) {
         Optional<TurPakke> turPakke = turPakkeRepo.findById(turPakkeKode);
         if (turPakke == null)
             throw new RuntimeException("Tur-pakke eksisterer ikke: " + turPakkeKode);
 
-        return turRepo.save(new Tur(tittel, beskrivelse, pris, turPakke.get()));
+        return turRepo.save(new Tur(tittel, beskrivelse, pris, turPakke.get(), grad));
     }
 
     public Iterable<Tur> lookup() {
         return turRepo.findAll();
+        //return turRepo.lookupTur("CC");
     }
 
     public long total() {
