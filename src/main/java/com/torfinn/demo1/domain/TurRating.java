@@ -1,16 +1,21 @@
 package com.torfinn.demo1.domain;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Objects;
 
 
 @Entity
 public class TurRating {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @EmbeddedId
-    private TurRatingPk pk;
+    @ManyToOne
+    @JoinColumn(name = "tur_id")
+    private Tur tur;
+
+    @Column(name = "customer_id")
+    private Integer customerId;
 
     @Column(nullable = false)
     private Integer score;
@@ -18,26 +23,70 @@ public class TurRating {
     @Column
     private String comment;
 
+
+
+    protected TurRating() {
+        // For Spring
+    }
+
+
+
+
     /**
      * Create a fully initialized TourRating.
      *
-     * @param pk         primiary key of a tour and customer id.
+     * @param tur         primiary key of a tour
+     * @param customerId  and customer id.
      * @param score      Integer score (1-5)
      * @param comment    Optional comment from the customer
      */
-    public TurRating(TurRatingPk pk, Integer score, String comment) {
-        this.pk = pk;
+    public TurRating(Tur tur, Integer customerId, Integer score, String comment) {
+        this.tur = tur;
+        this.customerId = customerId;
         this.score = score;
         this.comment = comment;
     }
 
-    protected TurRating() {
+    /**
+     * Create a fully initialized TourRating.
+     *
+     * @param tur         primiary key of a tour
+     * @param customerId  and customer id.
+     * @param score      Integer score (1-5)
+     */
+    public TurRating(Tur tur, Integer customerId, Integer score) {
+        this.tur = tur;
+        this.customerId = customerId;
+        this.score = score;
+        this.comment = toComment(score);
     }
+
+
+    /**
+     * Auto Generate a message for a score.
+     *
+     * @param score
+     * @return
+     */
+    private String toComment(Integer score) {
+        switch (score) {
+            case 1:return "Terrible";
+            case 2:return "Poor";
+            case 3:return "Fair";
+            case 4:return "Good";
+            case 5:return "Great";
+            default: return score.toString();
+        }
+    }
+
+
+
 
     @Override
     public String toString() {
         return "TurRating{" +
-                "pk=" + pk +
+                "TurId=" + tur.getId() +
+                ", customerId=" + customerId +
                 ", score=" + score +
                 ", comment='" + comment + '\'' +
                 '}';
@@ -48,18 +97,16 @@ public class TurRating {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TurRating that = (TurRating) o;
-        return Objects.equals(pk, that.pk) &&
+        return Objects.equals(id, that.id) &&
+                Objects.equals(tur, that.tur) &&
+                Objects.equals(customerId, that.customerId) &&
                 Objects.equals(score, that.score) &&
                 Objects.equals(comment, that.comment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pk, score, comment);
-    }
-
-    public TurRatingPk getPk() {
-        return pk;
+        return Objects.hash(id, tur, customerId, score, comment);
     }
 
     public Integer getScore() {
@@ -70,9 +117,6 @@ public class TurRating {
         return comment;
     }
 
-    public void setPk(TurRatingPk pk) {
-        this.pk = pk;
-    }
 
     public void setScore(Integer score) {
         this.score = score;
@@ -80,5 +124,21 @@ public class TurRating {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Tur getTur() {
+        return tur;
+    }
+
+    public void setTur(Tur tur) {
+        this.tur = tur;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 }

@@ -1,14 +1,13 @@
 package com.torfinn.demo1.repo;
 
 import com.torfinn.demo1.domain.TurRating;
-import com.torfinn.demo1.domain.TurRatingPk;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Tour Rating Repository Interface
@@ -16,7 +15,7 @@ import java.util.List;
  * Created by Mary Ellen Bowman
  */
 @RepositoryRestResource(exported = false)
-public interface TurRatingRepository extends CrudRepository<TurRating, TurRatingPk> {
+public interface TurRatingRepository extends CrudRepository<TurRating, Integer> {
 
     /**
      * Lookup all the TurRatings for a tour.
@@ -24,7 +23,7 @@ public interface TurRatingRepository extends CrudRepository<TurRating, TurRating
      * @param turId is the tour Identifier
      * @return a List of any found TurRatings
      */
-    List<TurRating> findByPkTurId(Integer turId);
+    List<TurRating> findByTurId(Integer turId);
 
     /**
      * Lookup a page of TurRatings for a tour.
@@ -33,7 +32,7 @@ public interface TurRatingRepository extends CrudRepository<TurRating, TurRating
      * @param pageable details for the desired page
      * @return a Page of any found TurRatings
      */
-    Page<TurRating> findByPkTurId(Integer turId, Pageable pageable);
+    Page<TurRating> findByTurId(Integer turId, Pageable pageable);
 
     /**
      * Lookup a TurRating by the TourId and Customer Id
@@ -41,5 +40,5 @@ public interface TurRatingRepository extends CrudRepository<TurRating, TurRating
      * @param customerId
      * @return TurRating if found, null otherwise.
      */
-    TurRating findByPkTurIdAndPkCustomerId(Integer turId, Integer customerId);
+    Optional<TurRating> findByTurIdAndCustomerId(Integer turId, Integer customerId);
 }

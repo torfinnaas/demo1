@@ -10,16 +10,16 @@ insert into tur_pakke (kode, navn) values
 ('SC', 'Snowboard Cali'),
 ('TC', 'Taste of California');
 
-insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) values
+insert into tur (tur_pakke_kode, tittel, beskrivelse, grad, pris) values
   (
     'BC',
     'Big Sur Retreat',
     'Big Sur is big country. The Big Sur Retreat takes you to the most majestic part of the Pacific Coast and show you the secret trails.',
-   'Medium',
+   'Easy',
     '750'
   );
 
-insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) values
+insert into tur (tur_pakke_kode, tittel, beskrivelse, grad, pris) values
   (
    'BC',
     'In the Steps of John Muir',
@@ -29,7 +29,7 @@ insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) v
   );
 
 
-insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) values
+insert into tur (tur_pakke_kode, tittel, beskrivelse, grad, pris) values
   (
    'BC',
     'The Death Valley Survivor''s Trek',
@@ -38,7 +38,7 @@ insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) v
     '250'
   );
 
-insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) values
+insert into tur (tur_pakke_kode, tittel, beskrivelse, grad, pris) values
   (
    'BC',
     'The Mt. Whitney Climbers Tour',
@@ -53,7 +53,7 @@ insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) v
    'Easy',
     '150'
   );
-insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) values
+insert into tur (tur_pakke_kode, tittel, beskrivelse, grad, pris) values
   (
     'CC',
     'Day Spa Package',
@@ -76,7 +76,7 @@ insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) v
     '225'
   );
 
-insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) values
+insert into tur (tur_pakke_kode, tittel, beskrivelse, grad, pris) values
   (
     'CH',
     'Avila Beach Hot springs',
@@ -86,7 +86,7 @@ insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) v
   );
 
 
-insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) values
+insert into tur (tur_pakke_kode, tittel, beskrivelse, grad, pris) values
   (
     'CH',
     'Matilija Hot springs',
@@ -98,7 +98,7 @@ insert into tur (tur_pakke_kode, tittel, beskrivelse, vanskelighetsgrad, pris) v
 
 
 
-insert into tour_rating (tur_id, customer_id, score, comment) values
+insert into tur_rating (tur_id, customer_id, score, comment) values
   (1, 4, 5, 'I loved it'),
   (2, 100, 5, 'I really thought it could have been better');
 

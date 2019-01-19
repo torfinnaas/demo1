@@ -20,10 +20,12 @@ public class Tur {
     private Integer pris;
 
     @ManyToOne
+    @JoinColumn(name="tur_pakke_kode")
     private TurPakke turPakke;
 
     @Column
-    private Grad vanskelighetsgrad;
+    @Enumerated(EnumType.STRING)
+    private Grad grad;
 
     protected Tur() {
         // used by Hibernate
@@ -35,7 +37,7 @@ public class Tur {
         this.beskrivelse = beskrivelse;
         this.pris = pris;
         this.turPakke = turPakke;
-        this.vanskelighetsgrad = grad;
+        this.grad = grad;
     }
 
     public Integer getId() {
@@ -75,12 +77,12 @@ public class Tur {
         this.turPakke = turPakke;
     }
 
-    public Grad getVanskelighetsgrad() {
-        return vanskelighetsgrad;
+    public Grad getGrad() {
+        return grad;
     }
 
-    public void setVanskelighetsgrad(Grad vanskelighetsgrad) {
-        this.vanskelighetsgrad = vanskelighetsgrad;
+    public void setGrad(Grad grad) {
+        this.grad = grad;
     }
 
     @Override
@@ -91,6 +93,7 @@ public class Tur {
                 ", beskrivelse='" + beskrivelse + '\'' +
                 ", pris=" + pris +
                 ", turPakke=" + turPakke +
+                ", grad=" + grad.toString() +
                 '}';
     }
 
@@ -104,6 +107,6 @@ public class Tur {
                 Objects.equals(beskrivelse, tur.beskrivelse) &&
                 Objects.equals(pris, tur.pris) &&
                 Objects.equals(turPakke, tur.turPakke) &&
-                vanskelighetsgrad == tur.vanskelighetsgrad;
+                grad == tur.grad;
     }
 }

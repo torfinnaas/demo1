@@ -17,7 +17,7 @@ import java.util.List;
 public interface TurRepo extends PagingAndSortingRepository<Tur, Integer> {
     public Tur findByTittel(String tittel);
 
-    public List<Tur> findByPrisLessThanAndTurPakke(Integer pris, TurPakke turPakke);
+    public List<Tur> findByPrisLessThanAndTurPakkeKode(@Param("pris") Integer pris, @Param("turPakkeKode") String turPakkeKode);
 
     public Page<Tur> findByTurPakkeKode(@Param("turPakkeKode") String turPakkeKode, Pageable pageable);
 

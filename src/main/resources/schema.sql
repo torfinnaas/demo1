@@ -10,7 +10,7 @@ CREATE TABLE tur (
   tittel VARCHAR(100) NOT NULL,
   beskrivelse VARCHAR(2000) NOT NULL,
   pris VARCHAR(10) not null,
-  vanskelighetsgrad VARCHAR(16) NOT NULL
+  grad VARCHAR(16) NOT NULL
 );
 ALTER TABLE tur ADD FOREIGN KEY (tur_pakke_kode) REFERENCES tur_pakke(kode);
 
