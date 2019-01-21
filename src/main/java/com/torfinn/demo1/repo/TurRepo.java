@@ -19,7 +19,7 @@ public interface TurRepo extends PagingAndSortingRepository<Tur, Integer> {
 
     public List<Tur> findByPrisLessThanAndTurPakkeKode(@Param("pris") Integer pris, @Param("turPakkeKode") String turPakkeKode);
 
-    public Page<Tur> findByTurPakkeKode(@Param("turPakkeKode") String turPakkeKode, Pageable pageable);
+    Page<Tur> findByTurPakkeKode(@Param("kode") String turPakkeKode, Pageable pageable);
 
     //@Query("select t from t Tur, tp TurPakke where t.tur.turPakke = tp.turPakke and tp.turPakke.kode = ?1")
     //public List<Tur> lookupTur(String turPakkeKode);

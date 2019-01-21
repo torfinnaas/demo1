@@ -1,11 +1,15 @@
 package com.torfinn.demo1.web;
 
 
-import com.torfinn.demo1.domain.Tur;
+
 import com.torfinn.demo1.domain.TurRating;
-import com.torfinn.demo1.repo.TurRatingRepository;
-import com.torfinn.demo1.repo.TurRepo;
 import com.torfinn.demo1.service.TurRatingService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
@@ -21,9 +25,11 @@ import java.util.stream.*;
 /**
  * Tur Rating Controller
  */
+@Api(description = "API for å hente eller sette rating på en tur")
 @RestController
 @RequestMapping(path = "/turer/{turId}/ratings")
 public class TurRatingController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TurRatingController.class);
     TurRatingService turRatingService;
 
     @Autowired
@@ -62,6 +68,7 @@ public class TurRatingController {
     public void createManyTourRatings(@PathVariable(value = "turId") int turId,
                                       @PathVariable(value = "score") int score,
                                       @RequestParam("customers") Integer customers[]) {
+        LOGGER.info("POST /turer/{}/ratings/{}", turId, score);
         turRatingService.rateMany(turId, score, customers);
     }
 
@@ -73,6 +80,8 @@ public class TurRatingController {
      * @param pageable
      * @return
      */
+    @ApiOperation(value = "Denne opersjonen lister alle ratings for en tur")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 404, message = "Tur finnes ikke!")})
     @GetMapping(path="")
     public Page<RatingDto> getAllRatingsForTur(@PathVariable(value = "turId") int turId, Pageable pageable) {
         Page<TurRating> turRatingPage = turRatingService.lookupRatings(turId, pageable);
@@ -169,6 +178,7 @@ public class TurRatingController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
     public String return400(NoSuchElementException ex) {
+        LOGGER.error("*** Kan ikke ferdigstille transaksjonen!", ex);
         return ex.getMessage();
 
     }

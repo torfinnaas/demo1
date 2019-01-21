@@ -3,7 +3,7 @@ package com.torfinn.demo1.repo;
 import com.torfinn.demo1.domain.TurRating;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Optional;
  * Created by Mary Ellen Bowman
  */
 @RepositoryRestResource(exported = false)
-public interface TurRatingRepository extends CrudRepository<TurRating, Integer> {
+public interface TurRatingRepository extends JpaRepository<TurRating, Integer> {
 
     /**
      * Lookup all the TurRatings for a tour.

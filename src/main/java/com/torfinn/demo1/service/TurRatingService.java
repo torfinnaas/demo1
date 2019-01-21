@@ -4,14 +4,16 @@ import com.torfinn.demo1.domain.Tur;
 import com.torfinn.demo1.domain.TurRating;
 import com.torfinn.demo1.repo.TurRatingRepository;
 import com.torfinn.demo1.repo.TurRepo;
+import com.torfinn.demo1.web.TurRatingController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.OptionalDouble;
+import javax.transaction.Transactional;
+import java.util.*;
 
 /**
  * Tour Rating Service
@@ -19,9 +21,11 @@ import java.util.OptionalDouble;
  * Created by Mary Ellen Bowman.
  */
 @Service
+@Transactional
 public class TurRatingService {
     private TurRatingRepository turRatingRepository;
     private TurRepo turRepo;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TurRatingController.class);
 
     /**
      * Construct TourRatingService
@@ -47,6 +51,32 @@ public class TurRatingService {
     public void createNew(int turId, Integer customerId, Integer score, String comment) throws NoSuchElementException {
         turRatingRepository.save(new TurRating(verifyTur(turId), customerId, score, comment));    //    new TurRating(new TurRatingPk(turId, customerId), score, comment);
     }
+
+
+    /**
+     * Get a ratings by id.
+     *
+     * @param id rating identifier
+     * @return TourRatings
+     */
+    public Optional<TurRating> lookupRatingById(int id)  {
+        return turRatingRepository.findById(id);
+    }
+
+
+
+    /**
+     * Get All Ratings.
+     *
+     * @return List of TourRatings
+     */
+    public List<TurRating> lookupAll()  {
+        LOGGER.info("Lookup all Ratings");
+        return turRatingRepository.findAll();
+    }
+
+
+
 
     /**
      * Get a page of tour ratings for a tour.
@@ -129,9 +159,11 @@ public class TurRatingService {
      * @param score
      * @param customers
      */
-    public void rateMany(int turId,  int score, Integer [] customers) {
+     public void rateMany(int turId,  int score, Integer [] customers) {
+        LOGGER.info("Setter rating på tur {} fra kunder {}", turId, Arrays.asList(customers).toString());
         turRepo.findById(turId).ifPresent(tur -> {
             for (Integer c : customers) {
+                LOGGER.debug("Prøver å lage en tur-rating for kunde {}", c);
                 turRatingRepository.save(new TurRating(tur, c, score));
             }
         });
@@ -158,7 +190,7 @@ public class TurRatingService {
      * @return the found TourRating
      * @throws NoSuchElementException if no TourRating found
      */
-    private TurRating verifyTurRating(int turId, int customerId) throws NoSuchElementException {
+    public TurRating verifyTurRating(int turId, int customerId) throws NoSuchElementException {
         return turRatingRepository.findByTurIdAndCustomerId(turId, customerId).orElseThrow(() ->
                 new NoSuchElementException("Tour-Rating pair for request("
                         + turId + " for customer" + customerId));

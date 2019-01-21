@@ -109,6 +109,10 @@ public class TurRating {
         return Objects.hash(id, tur, customerId, score, comment);
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public Integer getScore() {
         return score;
     }
